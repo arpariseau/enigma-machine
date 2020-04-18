@@ -12,13 +12,6 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, @enigma
   end
 
-  def test_attributes
-    assert_equal ({}), @enigma.cipher_a
-    assert_equal ({}), @enigma.cipher_b
-    assert_equal ({}), @enigma.cipher_c
-    assert_equal ({}), @enigma.cipher_d
-  end
-
   def test_encrypt
     skip
     expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
@@ -35,6 +28,10 @@ class EnigmaTest < Minitest::Test
 
   def test_create_offsets
     assert_equal [3, 27, 73, 20], @enigma.create_offsets([02, 27, 71, 15], "040895")
+  end
+
+  def test_assemble
+    assert_equal "abcdefg", @enigma.assemble(["ae", "bf", "cg", "d"])
   end
 
 end

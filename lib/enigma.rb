@@ -1,19 +1,13 @@
 class Enigma
-  attr_reader :cipher_a, :cipher_b, :cipher_c, :cipher_d
-
-  def initialize
-    @cipher_a = Hash.new(0)
-    @cipher_b = Hash.new(0)
-    @cipher_c = Hash.new(0)
-    @cipher_d = Hash.new(0)
-  end
 
   def encrypt(message, keycode, date)
     messages = split_message(message)
-    offsets = create_shifts(keycode, date)
-    create_ciphers(messages, offsets)
-    #adjust the messages
-    #concatenate
+    shifts = create_shifts(keycode, date)
+    ciphers = Hash[messages.zip shifts]
+    encoded = []
+    ciphers.each {|message, shift| encoded << Cipher.encode(message, shift)}
+    encryption = assemble(encoded)
+    {encryption: encryption, key: keycode, date: date}
   end
 
   def split_message(message)
@@ -38,6 +32,15 @@ class Enigma
       i += 1
       keyshift += date_squared[i].to_i
     end
+  end
+
+  def assemble(encoded)
+    encrypted = []
+    (0..encoded.first.length).to_a.each do |index|
+      encoded.each {|snippet| encrypted << snippet[index] if
+                              !snippet[index].nil?}
+    end
+    encrypted.join
   end
 
 end
