@@ -1,11 +1,13 @@
-class Enigma
+require_relative 'cipher'
+
+class Enigma < Cipher
 
   def encrypt(message, keycode, date)
     splits = split_message(message)
     shifts = create_shifts(keycode, date)
     ciphers = Hash[splits.zip shifts]
     encoded = []
-    ciphers.each {|message, shift| encoded << Cipher.encode(message, shift)}
+    ciphers.each {|message, shift| encoded << encode(message, shift)}
     {encryption: assemble(encoded), key: keycode, date: date}
   end
 
