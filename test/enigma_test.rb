@@ -12,4 +12,21 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, @enigma
   end
 
+  def test_encrypt
+    expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
+  end
+
+  def test_split_message
+    assert_equal ["Hoo", "e,r", "l l", "lwd"], @enigma.split_message("Hello, world")
+  end
+
+  def test_create_shifts
+    assert_equal [3, 27, 73, 20], @enigma.create_shifts("02715", "040895")
+  end
+
+  def test_assemble
+    assert_equal "abcdefg", @enigma.assemble(["ae", "bf", "cg", "d"])
+  end
+
 end
