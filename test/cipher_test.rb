@@ -15,4 +15,8 @@ class CipherTest < Minitest::Test
     assert_equal ({}), @cipher.cipher
   end
 
+  def test_encode
+    assert_equal "lbkr", @cipher.encode("Duck", 7)
+  end
+
 end
