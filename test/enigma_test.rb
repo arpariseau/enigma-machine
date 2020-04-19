@@ -24,7 +24,10 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt
-
+    Date.stubs(:today).returns(Date.new(1995, 8, 4))
+    @enigma.stubs(:generate_random_key).returns("02715")
+    expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.encrypt("hello world")
   end
 
   def test_split_message
@@ -42,6 +45,11 @@ class EnigmaTest < Minitest::Test
   def test_get_date
     Date.stubs(:today).returns(Date.new(1995, 8, 4))
     assert_equal "040895", @enigma.get_date
+  end
+
+  def test_generate_random_key
+    @enigma.stubs(:rand).returns(2715)
+    assert_equal "02715", @enigma.generate_random_key
   end
 
 end
