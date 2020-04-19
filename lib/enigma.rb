@@ -1,13 +1,12 @@
 class Enigma
 
   def encrypt(message, keycode, date)
-    messages = split_message(message)
+    splits = split_message(message)
     shifts = create_shifts(keycode, date)
-    ciphers = Hash[messages.zip shifts]
+    ciphers = Hash[splits.zip shifts]
     encoded = []
     ciphers.each {|message, shift| encoded << Cipher.encode(message, shift)}
-    encryption = assemble(encoded)
-    {encryption: encryption, key: keycode, date: date}
+    {encryption: assemble(encoded), key: keycode, date: date}
   end
 
   def split_message(message)
@@ -22,10 +21,6 @@ class Enigma
   def create_shifts(keycode, date)
     keyshifts = [keycode[0..1].to_i, keycode[1..2].to_i,
                  keycode[2..3].to_i, keycode[3..4].to_i]
-    create_offsets(keyshifts, date)
-  end
-
-  def create_offsets(keyshifts, date)
     date_squared = (date.to_i ** 2).to_s[-4..-1]
     i = -1
     keyshifts.map do |keyshift|
