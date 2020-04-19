@@ -1,8 +1,11 @@
 require_relative 'cipher'
+require 'date'
 
 class Enigma < Cipher
 
-  def encrypt(message, keycode, date)
+  def encrypt(message, keycode=nil, date=nil)
+    date = get_date if date == nil
+    keycode = generate_random_key if keycode == nil
     splits = split_message(message)
     shifts = create_shifts(keycode, date)
     ciphers = Hash[splits.zip shifts]
@@ -38,6 +41,15 @@ class Enigma < Cipher
                               !snippet[index].nil?}
     end
     encrypted.join
+  end
+
+  def get_date
+    Date.today.strftime("%d%m%y")
+  end
+
+  def generate_random_key
+    random_key = rand(100000)
+    (random_key.to_f / 100000).to_s[2..6]
   end
 
 end
