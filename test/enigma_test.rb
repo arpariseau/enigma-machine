@@ -48,8 +48,16 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_generate_random_key
+    @enigma.stubs(:rand).returns(5)
+    assert_equal "00005", @enigma.generate_random_key
+    @enigma.stubs(:rand).returns(15)
+    assert_equal "00015", @enigma.generate_random_key
+    @enigma.stubs(:rand).returns(715)
+    assert_equal "00715", @enigma.generate_random_key
     @enigma.stubs(:rand).returns(2715)
     assert_equal "02715", @enigma.generate_random_key
+    @enigma.stubs(:rand).returns(99999)
+    assert_equal "99999", @enigma.generate_random_key
   end
 
 end

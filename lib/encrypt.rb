@@ -21,4 +21,11 @@ attr_reader :input_path, :output_path
     File.open(@input_path).readlines.map {|line| line.chomp}.join
   end
 
+  def encrypt_message
+    enigma = Enigma.new
+    encrypted = enigma.encrypt(read_message)
+    puts "Created '#{@output_path}' with the key #{encrypted[:key]} and date #{encrypted.date}"
+    write_message(encrpyted[:encryption])
+  end
+
 end

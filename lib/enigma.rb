@@ -49,7 +49,11 @@ class Enigma < Cipher
 
   def generate_random_key
     random_key = rand(100000)
-    (random_key.to_f / 100000).to_s[2..6]
+    return "0000" + random_key.to_s if random_key < 10
+    return "000" + random_key.to_s if random_key < 100
+    return "00" + random_key.to_s if random_key < 1000
+    return "0" + random_key.to_s if random_key < 10000
+    random_key.to_s
   end
 
 end
