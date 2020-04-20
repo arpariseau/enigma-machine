@@ -1,14 +1,14 @@
 require_relative 'test_helper'
-require './lib/encrypt'
+require './lib/encryption'
 
-class EncryptTest < Minitest::Test
+class EncryptionTest < Minitest::Test
 
   def setup
-    @encrypt = Encrypt.new
+    @encrypt = Encryption.new
   end
 
   def test_existence
-    assert_instance_of Encrypt, @encrypt
+    assert_instance_of Encryption, @encrypt
   end
 
   def test_attributes
