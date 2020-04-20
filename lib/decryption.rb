@@ -1,4 +1,9 @@
+require_relative 'writable'
+require_relative 'readable'
+require_relative 'enigma'
+
 class Decryption
+  include Writable, Readable
   attr_reader :input_path, :output_path,
               :keycode, :date
 
@@ -18,6 +23,13 @@ class Decryption
     @output_path = get_paths[1]
     @keycode = get_paths[2]
     @date = get_paths[3]
+  end
+
+  def decrypt_message
+    enigma = Enigma.new
+    decrypted = enigma.decrypt(read_message, @keycode, @date)
+    puts "Created '#{@output_path}' with the key #{decrypted[:key]} and date #{decrypted[:date]}"
+    write_message(decrypted[:decryption])
   end
 
 end
