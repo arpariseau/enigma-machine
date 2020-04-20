@@ -30,6 +30,11 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.encrypt("hello world")
   end
 
+  def test_decrypt_w_date
+    expected = { decryption: "hello world", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+  end
+
   def test_split_message
     assert_equal ["Hoo", "e,r", "l l", "lwd"], @enigma.split_message("Hello, world")
   end

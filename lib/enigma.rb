@@ -14,6 +14,15 @@ class Enigma < Cipher
     {encryption: assemble(encoded), key: keycode, date: date}
   end
 
+  def decrypt(message, keycode, date)
+    splits = split_message(message)
+    shifts = create_shifts(keycode, date)
+    ciphers = Hash[splits.zip shifts]
+    decoded = []
+    ciphers.each {|message, shift| decoded << decode(message, shift)}
+    {decryption: assemble(decoded), key: keycode, date: date}
+  end
+
   def split_message(message)
     msg_a, msg_b, msg_c, msg_d = [], [], [], []
     message.chars.each_slice(4) do |fourletter|
