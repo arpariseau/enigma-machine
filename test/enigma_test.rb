@@ -123,4 +123,9 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.find_matches(["08", "35", "62", "89"], ["02", "29", "56", "83"])
   end
 
+  def test_filter_matches
+    input = [{"08"=>"83", "35"=>"56", "62"=>"29"}, {"83"=>"30"}, {"03"=>"31", "30"=>"04"}]
+    assert_equal "08304", @enigma.filter_matches(input)
+  end
+
 end
