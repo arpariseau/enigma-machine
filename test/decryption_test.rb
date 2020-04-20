@@ -10,4 +10,5 @@ class DecryptionTest < Minitest::Test
   def test_existence
     assert_instance_of Decryption, @decrypt
   end
+
 end
