@@ -14,7 +14,8 @@ class Enigma < Cipher
     {encryption: assemble(encoded), key: keycode, date: date}
   end
 
-  def decrypt(message, keycode, date)
+  def decrypt(message, keycode, date=nil)
+    date = get_date if date == nil
     splits = split_message(message)
     shifts = create_shifts(keycode, date)
     ciphers = Hash[splits.zip shifts]
