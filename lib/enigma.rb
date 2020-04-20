@@ -115,12 +115,25 @@ class Enigma < Cipher
   end
 
   def break_code(code_shifts)
-    get_possible_codes(code_shifts)
+    possible_codes = get_possible_codes(code_shifts)
+    construct_code_strings(possible_codes)
   end
 
   def get_possible_codes(code_shifts)
     code_shifts.map do |shift|
       (0..99).to_a.find_all{|num| num % 27 == shift}
+    end
+  end
+
+  def construct_code_strings(possible_codes)
+    possible_codes.map do |codes|
+      codes.map do |code|
+        if code <= 9
+          code = "0" + code.to_s
+        else
+          code.to_s
+        end
+      end
     end
   end
 
