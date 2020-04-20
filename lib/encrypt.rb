@@ -23,8 +23,12 @@ class Encrypt
   def encrypt_message
     enigma = Enigma.new
     encrypted = enigma.encrypt(read_message)
-    puts "Created '#{@output_path}' with the key #{encrypted[:key]} and date #{encrypted.date}"
-    write_message(encrpyted[:encryption])
+    puts "Created '#{@output_path}' with the key #{encrypted[:key]} and date #{encrypted[:date]}"
+    write_message(encrypted[:encryption])
   end
 
 end
+
+encrypt = Encrypt.new
+encrypt.set_paths
+encrypt.encrypt_message
