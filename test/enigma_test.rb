@@ -30,6 +30,17 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.encrypt("hello world")
   end
 
+  def test_decrypt_w_date
+    expected = { decryption: "hello world", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+  end
+
+  def test_decrypt
+    Date.stubs(:today).returns(Date.new(1995, 8, 4))
+    expected = { decryption: "hello world", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.decrypt("keder ohulw", "02715")
+  end
+
   def test_split_message
     assert_equal ["Hoo", "e,r", "l l", "lwd"], @enigma.split_message("Hello, world")
   end
@@ -58,6 +69,11 @@ class EnigmaTest < Minitest::Test
     assert_equal "02715", @enigma.generate_random_key
     @enigma.stubs(:rand).returns(99999)
     assert_equal "99999", @enigma.generate_random_key
+  end
+
+  def test_prep_ciphers
+    expected = {"Hoo" => 3, "e,r" => 27, "l l" => 73, "lwd" => 20}
+    assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
   end
 
 end

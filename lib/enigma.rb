@@ -6,12 +6,24 @@ class Enigma < Cipher
   def encrypt(message, keycode=nil, date=nil)
     date = get_date if date == nil
     keycode = generate_random_key if keycode == nil
-    splits = split_message(message)
-    shifts = create_shifts(keycode, date)
-    ciphers = Hash[splits.zip shifts]
+    ciphers = prep_ciphers(message, keycode, date)
     encoded = []
     ciphers.each {|message, shift| encoded << encode(message, shift)}
     {encryption: assemble(encoded), key: keycode, date: date}
+  end
+
+  def decrypt(message, keycode, date=nil)
+    date = get_date if date == nil
+    ciphers = prep_ciphers(message, keycode, date)
+    decoded = []
+    ciphers.each {|message, shift| decoded << decode(message, shift)}
+    {decryption: assemble(decoded), key: keycode, date: date}
+  end
+
+  def prep_ciphers(message, keycode, date)
+    splits = split_message(message)
+    shifts = create_shifts(keycode, date)
+    Hash[splits.zip shifts]
   end
 
   def split_message(message)
@@ -34,13 +46,13 @@ class Enigma < Cipher
     end
   end
 
-  def assemble(encoded)
-    encrypted = []
-    (0..encoded.first.length).to_a.each do |index|
-      encoded.each {|snippet| encrypted << snippet[index] if
+  def assemble(scrambled)
+    finished = []
+    (0..scrambled.first.length).to_a.each do |index|
+      scrambled.each {|snippet| finished << snippet[index] if
                               !snippet[index].nil?}
     end
-    encrypted.join
+    finished.join
   end
 
   def get_date
