@@ -46,6 +46,12 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.crack("vjqtbeaweqihssi", "291018")
   end
 
+  def test_crack
+    Date.stubs(:today).returns(Date.new(2018, 10, 29))
+    expected = {decryption: "hello world end", date: "291018", key: "08304"}
+    assert_equal expected, @enigma.crack("vjqtbeaweqihssi")
+  end
+
   def test_split_message
     assert_equal ["Hoo", "e,r", "l l", "lwd"], @enigma.split_message("Hello, world")
   end

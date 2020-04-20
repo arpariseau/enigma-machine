@@ -20,7 +20,8 @@ class Enigma < Cipher
     {decryption: assemble(decoded), key: keycode, date: date}
   end
 
-  def crack(message, date)
+  def crack(message, date=nil)
+    date = get_date if date == nil
     crib_word = message[-4..-1]
     base_shifts = find_shifts(crib_word)
     shifts = find_shift_positions(message, base_shifts)
