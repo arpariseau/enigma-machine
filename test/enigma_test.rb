@@ -85,10 +85,15 @@ class EnigmaTest < Minitest::Test
   def test_find_shifts
     assert_equal [1, 23, 14, 24], @enigma.find_shifts("aaaa")
     assert_equal [26, 21, 12, 22], @enigma.find_shifts("zzzz")
+    assert_equal [8, 14, 5, 5], @enigma.find_shifts("hssi")
   end
 
   def test_adjust_shifts
     assert_equal [5, 10, 15, 20], @enigma.adjust_shifts([5, -17, 15, -7])
+  end
+
+  def test_find_shift_positions
+    assert_equal [14, 5, 5, 8], @enigma.find_shift_positions("hello world end", [8, 14, 5, 5])
   end
 
 end

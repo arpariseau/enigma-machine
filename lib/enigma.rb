@@ -22,8 +22,9 @@ class Enigma < Cipher
 
   def crack(message, date)
     crib_word = message[-4..-1]
-    find_shifts(crib_word)
-    #subtract offsets using date
+    shifts = find_shifts(crib_word)
+    find_shift_positions(message, shifts)
+    #subtract offsets
     #assemble possible codes
     #utilize decrypt method to read message
   end
@@ -96,6 +97,12 @@ class Enigma < Cipher
         shift
       end
     end
+  end
+
+  def find_shift_positions(message, shifts)
+    shift_pos = message.length % 4
+    pos_swap = shifts.shift(4 - shift_pos)
+    shifts += pos_swap
   end
 
 end
