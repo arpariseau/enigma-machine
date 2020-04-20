@@ -18,4 +18,13 @@ class DecryptionTest < Minitest::Test
     assert_equal "", @decrypt.date
   end
 
+  def test_set_paths
+    @decrypt.stubs(:get_paths).returns(["encrypted.txt", "decrypted.txt", "82648", "240818"])
+    @decrypt.set_paths
+    assert_equal "encrypted.txt", @decrypt.input_path
+    assert_equal "decrypted.txt", @decrypt.output_path
+    assert_equal "82648", @decrypt.keycode
+    assert_equal "240818", @decrypt.date
+  end
+
 end
