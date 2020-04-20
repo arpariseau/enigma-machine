@@ -115,14 +115,10 @@ class Enigma < Cipher
   end
 
   def break_code(code_shifts)
-    possible_codes = get_possible_codes(code_shifts)
-    code_strings = construct_code_strings(possible_codes)
-    index = 0; matches = []
-    3.times do
-      matches << find_matches(code_strings[index], code_strings[index + 1])
-      index += 1
-    end
-    filter_matches(matches)
+     possible_codes = get_possible_codes(code_shifts)
+     code_strings = construct_code_strings(possible_codes)
+     matches = find_matches(code_strings)
+
   end
 
   def get_possible_codes(code_shifts)
@@ -143,37 +139,47 @@ class Enigma < Cipher
     end
   end
 
-  def find_matches(first_codes, second_codes)
-    matches = {}
-    first_codes.each do |code1|
-      matches[code1] = second_codes.find {|code2| code1[1] == code2[0]}
+  def find_matches(code_strings)
+    code_strings[0].each do |code1|
+      second_code = code_strings[1].find {|code2| code1[1] == code2[0]}
+      next if second_code.nil?
+      third_code = code_strings[2].find {|code3| second_code[1] == code3[0]}
+      next if third_code.nil?
+      final_code = code_strings[3].find {|code4| third_code[1] == code4[0]}
+      next if final_code.nil?
+      return [code1, second_code, third_code, final_code]
     end
-    matches.delete_if{|code1, code2| code2.nil?}
   end
-
-  def filter_matches(matches)
-    if matches[0].length == 1
-      code = find_successors(matches)
-    elsif matches[1].length == 1
-      code = find_predecessor_and_successor(matches)
-    elsif matches[2].length == 1
-      code = find_predecessors(matches)
-    else
-      code = twin_codes(matches)
-    end
-    construct_code(code)
-  end
-
-  def construct_code(code)
-    code = code.uniq
-    code[0][0] + code[1][0] + code[2][0] + code[3]
-  end
-
-  def find_successors(matches)
-    first_match = matches[0].to_a.flatten
-    second_match = matches[1].find{|code1, code2| first_match[1] == code1}
-    final_match = matches[2].find{|code1, code2| second_match[1] == code1}
-    [first_match, second_match, final_match].flatten
-  end
+  #   matches = {}
+  #   first_codes.each do |code1|
+  #     matches[code1] = second_codes.find {|code2| code1[1] == code2[0]}
+  #   end
+  #   matches.delete_if{|code1, code2| code2.nil?}
+  # end
+  #
+  # def filter_matches(matches)
+  #   if matches[0].length == 1
+  #     code = find_successors(matches)
+  #   elsif matches[1].length == 1
+  #     code = find_predecessor_and_successor(matches)
+  #   elsif matches[2].length == 1
+  #     code = find_predecessors(matches)
+  #   else
+  #     code = twin_codes(matches)
+  #   end
+  #   construct_code(code)
+  # end
+  #
+  # def construct_code(code)
+  #   code = code.uniq
+  #   code[0][0] + code[1][0] + code[2][0] + code[3]
+  # end
+  #
+  # def find_successors(matches)
+  #   first_match = matches[0].to_a.flatten
+  #   second_match = matches[1].find{|code1, code2| first_match[1] == code1}
+  #   final_match = matches[2].find{|code1, code2| second_match[1] == code1}
+  #   [first_match, second_match, final_match].flatten
+  # end
 
 end

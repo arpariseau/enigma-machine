@@ -101,7 +101,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_break_code
-    assert_equal "90291", @enigma.break_code([9, 2, 2, 10])
     assert_equal "08304", @enigma.break_code([8, 2, 3, 4])
   end
 
@@ -119,23 +118,24 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.construct_code_strings(input)
   end
 
-  def test_find_matches
-    expected = {"08" => "83", "35" => "56", "62" => "29"}
-    assert_equal expected, @enigma.find_matches(["08", "35", "62", "89"], ["02", "29", "56", "83"])
-  end
-
-  def test_filter_matches
-    input = [{"08"=>"83", "35"=>"56", "62"=>"29"}, {"83"=>"30"}, {"03"=>"31", "30"=>"04"}]
-    assert_equal "08304", @enigma.filter_matches(input)
-  end
-
-  def test_find_successors
-    input = [{"90"=>"02"}, {"02"=>"29"}, {"29" => "91", "56" => "64"}]
-    assert_equal ["90", "02", "02", "29", "29", "91"], @enigma.find_successors(input)
-  end
-
-  def test_construct_code
-    assert_equal "08304", @enigma.construct_code(["08", "83", "83", "30", "30", "04"])
-  end
+   def test_find_matches
+     input = [["08", "35", "62", "89"], ["02", "29", "56", "83"],
+              ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
+     assert_equal ["08", "83", "30", "04"], @enigma.find_matches(input)
+   end
+  #
+  # def test_filter_matches
+  #   input = [{"08"=>"83", "35"=>"56", "62"=>"29"}, {"83"=>"30"}, {"03"=>"31", "30"=>"04"}]
+  #   assert_equal "08304", @enigma.filter_matches(input)
+  # end
+  #
+  # def test_find_successors
+  #   input = [{"90"=>"02"}, {"02"=>"29"}, {"29" => "91", "56" => "64"}]
+  #   assert_equal ["90", "02", "02", "29", "29", "91"], @enigma.find_successors(input)
+  # end
+  #
+  # def test_construct_code
+  #   assert_equal "08304", @enigma.construct_code(["08", "83", "83", "30", "30", "04"])
+  # end
 
 end
