@@ -24,8 +24,8 @@ class Enigma < Cipher
     crib_word = message[-4..-1]
     base_shifts = find_shifts(crib_word)
     shifts = find_shift_positions(message, base_shifts)
-    subtract_offsets(shifts, date)
-    #assemble possible codes
+    code_shifts = subtract_offsets(shifts, date)
+    break_code(code_shifts)
     #utilize decrypt method to read message
   end
 
@@ -113,4 +113,15 @@ class Enigma < Cipher
       shift -= date_squared.chars[index].to_i
     end
   end
+
+  def break_code(code_shifts)
+    get_possible_codes(code_shifts)
+  end
+
+  def get_possible_codes(code_shifts)
+    code_shifts.map do |shift|
+      (0..99).to_a.find_all{|num| num % 27 == shift}
+    end
+  end
+
 end
