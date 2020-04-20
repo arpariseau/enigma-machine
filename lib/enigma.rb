@@ -25,8 +25,8 @@ class Enigma < Cipher
     base_shifts = find_shifts(crib_word)
     shifts = find_shift_positions(message, base_shifts)
     code_shifts = subtract_offsets(shifts, date)
-    break_code(code_shifts)
-    #utilize decrypt method to read message
+    keycode = break_code(code_shifts)
+    decrypt(message, keycode, date)
   end
 
   def prep_ciphers(message, keycode, date)
@@ -118,7 +118,7 @@ class Enigma < Cipher
      possible_codes = get_possible_codes(code_shifts)
      code_strings = construct_code_strings(possible_codes)
      matches = find_matches(code_strings)
-
+     matches[0][0] + matches[1][0] + matches[2][0] + matches[3]
   end
 
   def get_possible_codes(code_shifts)
@@ -150,36 +150,5 @@ class Enigma < Cipher
       return [code1, second_code, third_code, final_code]
     end
   end
-  #   matches = {}
-  #   first_codes.each do |code1|
-  #     matches[code1] = second_codes.find {|code2| code1[1] == code2[0]}
-  #   end
-  #   matches.delete_if{|code1, code2| code2.nil?}
-  # end
-  #
-  # def filter_matches(matches)
-  #   if matches[0].length == 1
-  #     code = find_successors(matches)
-  #   elsif matches[1].length == 1
-  #     code = find_predecessor_and_successor(matches)
-  #   elsif matches[2].length == 1
-  #     code = find_predecessors(matches)
-  #   else
-  #     code = twin_codes(matches)
-  #   end
-  #   construct_code(code)
-  # end
-  #
-  # def construct_code(code)
-  #   code = code.uniq
-  #   code[0][0] + code[1][0] + code[2][0] + code[3]
-  # end
-  #
-  # def find_successors(matches)
-  #   first_match = matches[0].to_a.flatten
-  #   second_match = matches[1].find{|code1, code2| first_match[1] == code1}
-  #   final_match = matches[2].find{|code1, code2| second_match[1] == code1}
-  #   [first_match, second_match, final_match].flatten
-  # end
 
 end

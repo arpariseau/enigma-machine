@@ -42,7 +42,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_crack_w_date
-    skip
     expected = {decryption: "hello world end", date: "291018", key: "08304"}
     assert_equal expected, @enigma.crack("vjqtbeaweqihssi", "291018")
   end
@@ -123,19 +122,5 @@ class EnigmaTest < Minitest::Test
               ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
      assert_equal ["08", "83", "30", "04"], @enigma.find_matches(input)
    end
-  #
-  # def test_filter_matches
-  #   input = [{"08"=>"83", "35"=>"56", "62"=>"29"}, {"83"=>"30"}, {"03"=>"31", "30"=>"04"}]
-  #   assert_equal "08304", @enigma.filter_matches(input)
-  # end
-  #
-  # def test_find_successors
-  #   input = [{"90"=>"02"}, {"02"=>"29"}, {"29" => "91", "56" => "64"}]
-  #   assert_equal ["90", "02", "02", "29", "29", "91"], @enigma.find_successors(input)
-  # end
-  #
-  # def test_construct_code
-  #   assert_equal "08304", @enigma.construct_code(["08", "83", "83", "30", "30", "04"])
-  # end
 
 end
