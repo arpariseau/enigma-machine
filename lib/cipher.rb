@@ -16,6 +16,12 @@ class Cipher
     end.join
   end
 
+  def decode(message, shift)
+    shift -= 27 until shift <= 27
+    reverse_shift = 27 - shift
+    encode(message, reverse_shift)
+  end
+
   def create_cipher(shift)
     shift -= 27 until shift <= 27
     base = ("a".."z").to_a << " "

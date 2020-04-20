@@ -19,6 +19,10 @@ class CipherTest < Minitest::Test
     assert_equal "kajr?", @cipher.encode("Duck?", 7)
   end
 
+  def test_decode
+    assert_equal "duck?", @cipher.decode("kajr?", 61)
+  end
+
   def test_create_cipher
     expected = {"a" => "e", "b" => "f", "c" => "g",
                 "d" => "h", "e" => "i", "f" => "j",
