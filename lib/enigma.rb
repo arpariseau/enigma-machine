@@ -22,9 +22,9 @@ class Enigma < Cipher
 
   def crack(message, date)
     crib_word = message[-4..-1]
-    shifts = find_shifts(crib_word)
-    find_shift_positions(message, shifts)
-    #subtract offsets
+    base_shifts = find_shifts(crib_word)
+    shifts = find_shift_positions(message, base_shifts)
+    subtract_offsets(shifts, date)
     #assemble possible codes
     #utilize decrypt method to read message
   end
@@ -105,4 +105,12 @@ class Enigma < Cipher
     shifts += pos_swap
   end
 
+  def subtract_offsets(shifts, date)
+    date_squared = (date.to_i ** 2).to_s[-4..-1]
+    index = -1
+    shifts.map do |shift|
+      index += 1
+      shift -= date_squared.chars[index].to_i
+    end
+  end
 end
