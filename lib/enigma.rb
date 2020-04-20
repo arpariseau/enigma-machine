@@ -6,9 +6,7 @@ class Enigma < Cipher
   def encrypt(message, keycode=nil, date=nil)
     date = get_date if date == nil
     keycode = generate_random_key if keycode == nil
-    splits = split_message(message)
-    shifts = create_shifts(keycode, date)
-    ciphers = Hash[splits.zip shifts]
+    ciphers = prep_ciphers(message, keycode, date)
     encoded = []
     ciphers.each {|message, shift| encoded << encode(message, shift)}
     {encryption: assemble(encoded), key: keycode, date: date}
@@ -16,12 +14,16 @@ class Enigma < Cipher
 
   def decrypt(message, keycode, date=nil)
     date = get_date if date == nil
-    splits = split_message(message)
-    shifts = create_shifts(keycode, date)
-    ciphers = Hash[splits.zip shifts]
+    ciphers = prep_ciphers(message, keycode, date)
     decoded = []
     ciphers.each {|message, shift| decoded << decode(message, shift)}
     {decryption: assemble(decoded), key: keycode, date: date}
+  end
+
+  def prep_ciphers(message, keycode, date)
+    splits = split_message(message)
+    shifts = create_shifts(keycode, date)
+    Hash[splits.zip shifts]
   end
 
   def split_message(message)

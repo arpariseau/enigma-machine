@@ -71,4 +71,9 @@ class EnigmaTest < Minitest::Test
     assert_equal "99999", @enigma.generate_random_key
   end
 
+  def test_prep_ciphers
+    expected = {"Hoo" => 3, "e,r" => 27, "l l" => 73, "lwd" => 20}
+    assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
+  end
+
 end
