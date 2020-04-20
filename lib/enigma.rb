@@ -22,8 +22,9 @@ class Enigma < Cipher
 
   def crack(message, date=nil)
     date = get_date if date == nil
+    bombe = Bombe.new
     crib_word = message[-4..-1]
-    base_shifts = find_shifts(crib_word)
+    base_shifts = bombe.find_shifts(crib_word)
     shifts = find_shift_positions(message, base_shifts)
     code_shifts = subtract_offsets(shifts, date)
     keycode = break_code(code_shifts)
@@ -76,28 +77,6 @@ class Enigma < Cipher
     return "00" + random_key.to_s if random_key < 1000
     return "0" + random_key.to_s if random_key < 10000
     random_key.to_s
-  end
-
-  def find_shifts(crib_word)
-    letters = ("a".."z").to_a << " "
-    numbers = (1..27).to_a
-    shift_finder = Hash[letters.zip numbers]
-    shifts = []
-    shifts << shift_finder[crib_word.chars[0]]
-    shifts << shift_finder[crib_word.chars[1]] - 5
-    shifts << shift_finder[crib_word.chars[2]] - 14
-    shifts << shift_finder[crib_word.chars[3]] - 4
-    adjust_shifts(shifts)
-  end
-
-  def adjust_shifts(shifts)
-    shifts.map do |shift|
-      if shift.negative?
-        shift += 27
-      else
-        shift
-      end
-    end
   end
 
   def find_shift_positions(message, shifts)
