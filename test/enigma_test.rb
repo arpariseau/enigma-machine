@@ -101,6 +101,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_break_code
+    assert_equal "90291", @enigma.break_code([9, 2, 2, 10])
     assert_equal "08304", @enigma.break_code([8, 2, 3, 4])
   end
 
@@ -126,6 +127,15 @@ class EnigmaTest < Minitest::Test
   def test_filter_matches
     input = [{"08"=>"83", "35"=>"56", "62"=>"29"}, {"83"=>"30"}, {"03"=>"31", "30"=>"04"}]
     assert_equal "08304", @enigma.filter_matches(input)
+  end
+
+  def test_find_successors
+    input = [{"90"=>"02"}, {"02"=>"29"}, {"29" => "91", "56" => "64"}]
+    assert_equal ["90", "02", "02", "29", "29", "91"], @enigma.find_successors(input)
+  end
+
+  def test_construct_code
+    assert_equal "08304", @enigma.construct_code(["08", "83", "83", "30", "30", "04"])
   end
 
 end

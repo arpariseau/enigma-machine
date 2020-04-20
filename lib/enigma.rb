@@ -165,8 +165,15 @@ class Enigma < Cipher
   end
 
   def construct_code(code)
-    code.flatten.uniq
+    code = code.uniq
     code[0][0] + code[1][0] + code[2][0] + code[3]
+  end
+
+  def find_successors(matches)
+    first_match = matches[0].to_a.flatten
+    second_match = matches[1].find{|code1, code2| first_match[1] == code1}
+    final_match = matches[2].find{|code1, code2| second_match[1] == code1}
+    [first_match, second_match, final_match].flatten
   end
 
 end
