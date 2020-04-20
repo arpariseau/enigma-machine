@@ -20,6 +20,14 @@ class Enigma < Cipher
     {decryption: assemble(decoded), key: keycode, date: date}
   end
 
+  def crack(message, date)
+    crib_word = message[-4..-1]
+    find_shifts(crib_word)
+    #subtract offsets using date
+    #assemble possible codes
+    #utilize decrypt method to read message
+  end
+
   def prep_ciphers(message, keycode, date)
     splits = split_message(message)
     shifts = create_shifts(keycode, date)
@@ -66,6 +74,28 @@ class Enigma < Cipher
     return "00" + random_key.to_s if random_key < 1000
     return "0" + random_key.to_s if random_key < 10000
     random_key.to_s
+  end
+
+  def find_shifts(crib_word)
+    letters = ("a".."z").to_a << " "
+    numbers = (1..27).to_a
+    shift_finder = Hash[letters.zip numbers]
+    shifts = []
+    shifts << shift_finder[crib_word.chars[0]]
+    shifts << shift_finder[crib_word.chars[1]] - 5
+    shifts << shift_finder[crib_word.chars[2]] - 14
+    shifts << shift_finder[crib_word.chars[3]] - 4
+    adjust_shifts(shifts)
+  end
+
+  def adjust_shifts(shifts)
+    shifts.map do |shift|
+      if shift.negative?
+        shift += 27
+      else
+        shift
+      end
+    end
   end
 
 end

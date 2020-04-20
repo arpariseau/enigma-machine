@@ -41,6 +41,12 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715")
   end
 
+  def test_crack_w_date
+    skip
+    expected = {decryption: "hello world end", date: "291018", key: "08304"}
+    assert_equal expected, @enigma.crack("vjqtbeaweqihssi", "291018")
+  end
+
   def test_split_message
     assert_equal ["Hoo", "e,r", "l l", "lwd"], @enigma.split_message("Hello, world")
   end
@@ -74,6 +80,15 @@ class EnigmaTest < Minitest::Test
   def test_prep_ciphers
     expected = {"Hoo" => 3, "e,r" => 27, "l l" => 73, "lwd" => 20}
     assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
+  end
+
+  def test_find_shifts
+    assert_equal [1, 23, 14, 24], @enigma.find_shifts("aaaa")
+    assert_equal [26, 21, 12, 22], @enigma.find_shifts("zzzz")
+  end
+
+  def test_adjust_shifts
+    assert_equal [5, 10, 15, 20], @enigma.adjust_shifts([5, -17, 15, -7])
   end
 
 end
