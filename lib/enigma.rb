@@ -43,13 +43,13 @@ class Enigma < Cipher
     end
   end
 
-  def assemble(encoded)
-    encrypted = []
-    (0..encoded.first.length).to_a.each do |index|
-      encoded.each {|snippet| encrypted << snippet[index] if
+  def assemble(scrambled)
+    finished = []
+    (0..scrambled.first.length).to_a.each do |index|
+      scrambled.each {|snippet| finished << snippet[index] if
                               !snippet[index].nil?}
     end
-    encrypted.join
+    finished.join
   end
 
   def get_date
