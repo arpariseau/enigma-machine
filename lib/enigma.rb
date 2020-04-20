@@ -116,7 +116,13 @@ class Enigma < Cipher
 
   def break_code(code_shifts)
     possible_codes = get_possible_codes(code_shifts)
-    construct_code_strings(possible_codes)
+    code_strings = construct_code_strings(possible_codes)
+    index = 0
+    matches = []
+    3.times do
+      matches << find_matches(code_strings[index], code_strings[index + 1])
+      index += 1
+    end
   end
 
   def get_possible_codes(code_shifts)
@@ -135,6 +141,14 @@ class Enigma < Cipher
         end
       end
     end
+  end
+
+  def find_matches(first_codes, second_codes)
+    matches = {}
+    first_codes.each do |code1|
+      matches[code1] = second_codes.find {|code2| code1[1] == code2[0]}
+    end
+    matches.delete_if{|code1, code2| code2.nil?}
   end
 
 end

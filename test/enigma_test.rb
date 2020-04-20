@@ -118,4 +118,9 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.construct_code_strings(input)
   end
 
+  def test_find_matches
+    expected = {"08" => "83", "35" => "56", "62" => "29"}
+    assert_equal expected, @enigma.find_matches(["08", "35", "62", "89"], ["02", "29", "56", "83"])
+  end
+
 end
