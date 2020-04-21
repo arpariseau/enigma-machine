@@ -87,10 +87,6 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
   end
 
-  def test_subtract_offsets
-    assert_equal [8, 2, 3, 4], @enigma.subtract_offsets([14, 5, 5, 8], "291018")
-  end
-
   def test_break_code
     assert_equal "08304", @enigma.break_code([8, 2, 3, 4])
   end

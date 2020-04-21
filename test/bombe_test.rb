@@ -26,4 +26,8 @@ class BombeTest < Minitest::Test
     assert_equal [14, 5, 5, 8], @bombe.find_shift_positions("hello world end", [8, 14, 5, 5])
   end
 
+  def test_subtract_offsets
+    assert_equal [8, 2, 3, 4], @enigma.subtract_offsets([14, 5, 5, 8], "291018")
+  end
+
 end

@@ -26,7 +26,7 @@ class Enigma < Cipher
     crib_word = message[-4..-1]
     base_shifts = bombe.find_shifts(crib_word)
     shifts = bombe.find_shift_positions(message, base_shifts)
-    code_shifts = subtract_offsets(shifts, date)
+    code_shifts = bombe.subtract_offsets(shifts, date)
     keycode = break_code(code_shifts)
     decrypt(message, keycode, date)
   end
@@ -77,15 +77,6 @@ class Enigma < Cipher
     return "00" + random_key.to_s if random_key < 1000
     return "0" + random_key.to_s if random_key < 10000
     random_key.to_s
-  end
-
-  def subtract_offsets(shifts, date)
-    date_squared = (date.to_i ** 2).to_s[-4..-1]
-    index = -1
-    shifts.map do |shift|
-      index += 1
-      shift -= date_squared.chars[index].to_i
-    end
   end
 
   def break_code(code_shifts)

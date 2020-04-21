@@ -28,4 +28,13 @@ class Bombe
     shifts += pos_swap
   end
 
+  def subtract_offsets(shifts, date)
+    date_squared = (date.to_i ** 2).to_s[-4..-1]
+    index = -1
+    shifts.map do |shift|
+      index += 1
+      shift -= date_squared.chars[index].to_i
+    end
+  end
+
 end
