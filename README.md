@@ -1,13 +1,13 @@
 # engima-machine
 
-##Functionality
+## Functionality
 
 - This machine is currently capable of encrypting, decrypting, and cracking an
 encryption, including taking into account and displaying alternate keys that
 provide the exact same encryption because of how the encryption method works. It
  is fully usable through the command-line interface and associated runner files.
 
-##Object-Oriented Programming
+## Object-Oriented Programming
 
 - The structure includes three classes that handle the encrypting, decrypting
 and cracking - "Cipher", "Enigma" and "Bombe", as well as three classes that
@@ -32,7 +32,7 @@ class. It then uses the Enigma classes' decrypt method to check its work - just
 as the cryptographers at Bletchley Park would use a captured Enigma machine to
 then work out the actual messages after they figured out the settings.
 
-##Ruby Conventions & Mechanics
+## Ruby Conventions & Mechanics
 
 - Reasoning behind the naming of the "Cipher", "Enigma" and "Bombe" classes has
 already been provided. The "Encryption", "Decryption" and "Code Cracker" classes
@@ -44,7 +44,7 @@ won't claim they're all perfect, but I feel like they all have their proper
 purpose. As for datatypes both arrays and hashes are used as needed, and
 iterated over properly.
 
-##Test-Driven Development
+## Test-Driven Development
 
 - Every method that does not relate to CLI or I/O has been tested - I tried to
 figure out how to use stubs to best simulate that, but decided that additional
@@ -64,7 +64,7 @@ they were supposed to be doing. Coverage is not quite at 100%, but that's
 largely due to the methods that I could not figure out how to test involving
 either CLI or I/O. Once accounted for, the rest is at 100%.
 
-##Version Control
+## Version Control
 
 - I'm well above both the commits and pull request requirements. The pull
 requests were made for the cipher class, the encrypt method (two, reopening the
