@@ -27,7 +27,7 @@ class Enigma < Cipher
     base_shifts = bombe.find_shifts(crib_word)
     shifts = bombe.find_shift_positions(message, base_shifts)
     code_shifts = bombe.subtract_offsets(shifts, date)
-    keycode = break_code(code_shifts)
+    keycode = bombe.break_code(code_shifts)
     decrypt(message, keycode, date)
   end
 
@@ -77,43 +77,6 @@ class Enigma < Cipher
     return "00" + random_key.to_s if random_key < 1000
     return "0" + random_key.to_s if random_key < 10000
     random_key.to_s
-  end
-
-  def break_code(code_shifts)
-     possible_codes = get_possible_codes(code_shifts)
-     code_strings = construct_code_strings(possible_codes)
-     matches = find_matches(code_strings)
-     matches[0][0] + matches[1][0] + matches[2][0] + matches[3]
-  end
-
-  def get_possible_codes(code_shifts)
-    code_shifts.map do |shift|
-      (0..99).to_a.find_all{|num| num % 27 == shift}
-    end
-  end
-
-  def construct_code_strings(possible_codes)
-    possible_codes.map do |codes|
-      codes.map do |code|
-        if code <= 9
-          code = "0" + code.to_s
-        else
-          code.to_s
-        end
-      end
-    end
-  end
-
-  def find_matches(code_strings)
-    code_strings[0].each do |code1|
-      second_code = code_strings[1].find {|code2| code1[1] == code2[0]}
-      next if second_code.nil?
-      third_code = code_strings[2].find {|code3| second_code[1] == code3[0]}
-      next if third_code.nil?
-      final_code = code_strings[3].find {|code4| third_code[1] == code4[0]}
-      next if final_code.nil?
-      return [code1, second_code, third_code, final_code]
-    end
   end
 
 end

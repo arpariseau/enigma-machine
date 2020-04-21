@@ -87,28 +87,4 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
   end
 
-  def test_break_code
-    assert_equal "08304", @enigma.break_code([8, 2, 3, 4])
-  end
-
-  def test_get_possible_codes
-    expected = [[8, 35, 62, 89], [2, 29, 56, 83],
-                [3, 30, 57, 84], [4, 31, 58, 85]]
-    assert_equal expected, @enigma.get_possible_codes([8, 2, 3, 4])
-  end
-
-  def test_construct_code_strings
-    input = [[8, 35, 62, 89], [2, 29, 56, 83],
-             [3, 30, 57, 84], [4, 31, 58, 85]]
-    expected = [["08", "35", "62", "89"], ["02", "29", "56", "83"],
-                ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
-    assert_equal expected, @enigma.construct_code_strings(input)
-  end
-
-   def test_find_matches
-     input = [["08", "35", "62", "89"], ["02", "29", "56", "83"],
-              ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
-     assert_equal ["08", "83", "30", "04"], @enigma.find_matches(input)
-   end
-
 end
