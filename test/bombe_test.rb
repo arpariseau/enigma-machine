@@ -27,17 +27,17 @@ class BombeTest < Minitest::Test
   end
 
   def test_subtract_offsets
-    assert_equal [8, 2, 3, 4], @enigma.subtract_offsets([14, 5, 5, 8], "291018")
+    assert_equal [8, 2, 3, 4], @bombe.subtract_offsets([14, 5, 5, 8], "291018")
   end
 
   def test_break_code
-    assert_equal "08304", @enigma.break_code([8, 2, 3, 4])
+    assert_equal "08304", @bombe.break_code([8, 2, 3, 4])
   end
 
   def test_get_possible_codes
     expected = [[8, 35, 62, 89], [2, 29, 56, 83],
                 [3, 30, 57, 84], [4, 31, 58, 85]]
-    assert_equal expected, @enigma.get_possible_codes([8, 2, 3, 4])
+    assert_equal expected, @bombe.get_possible_codes([8, 2, 3, 4])
   end
 
   def test_construct_code_strings
@@ -45,13 +45,13 @@ class BombeTest < Minitest::Test
              [3, 30, 57, 84], [4, 31, 58, 85]]
     expected = [["08", "35", "62", "89"], ["02", "29", "56", "83"],
                 ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
-    assert_equal expected, @enigma.construct_code_strings(input)
+    assert_equal expected, @bombe.construct_code_strings(input)
   end
 
    def test_find_matches
      input = [["08", "35", "62", "89"], ["02", "29", "56", "83"],
               ["03", "30", "57", "84"], ["04", "31", "58", "85"]]
-     assert_equal ["08", "83", "30", "04"], @enigma.find_matches(input)
+     assert_equal ["08", "83", "30", "04"], @bombe.find_matches(input)
    end
 
 end
