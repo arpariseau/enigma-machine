@@ -20,14 +20,14 @@ class EnigmaTest < Minitest::Test
   def test_encrypt_w_key
     Date.stubs(:today).returns(Date.new(1995, 8, 4))
     expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
-    assert_equal expected, @enigma.encrypt("hello world", "02715")
+    assert_equal expected, @enigma.encrypt("Hello World", "02715")
   end
 
   def test_encrypt
     Date.stubs(:today).returns(Date.new(1995, 8, 4))
     @enigma.stubs(:generate_random_key).returns("02715")
-    expected = {encryption: "keder ohulw", key: "02715", date: "040895"}
-    assert_equal expected, @enigma.encrypt("hello world")
+    expected = {encryption: "keder ohulw!", key: "02715", date: "040895"}
+    assert_equal expected, @enigma.encrypt("hello world!")
   end
 
   def test_decrypt_w_date
@@ -47,9 +47,9 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_crack
-    Date.stubs(:today).returns(Date.new(2018, 10, 29))
-    expected = {decryption: "hello world end", date: "291018", key: "08304"}
-    assert_equal expected, @enigma.crack("vjqtbeaweqihssi")
+    Date.stubs(:today).returns(Date.new(2020, 03, 30))
+    expected = {decryption: "hello world end", date: "300320", key: "25402"}
+    assert_equal expected, @enigma.crack("hiynodiqrpqberq")
   end
 
   def test_split_message
