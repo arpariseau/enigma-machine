@@ -26,7 +26,7 @@ attr_reader :input_path, :output_path, :date
     enigma = Enigma.new
     cracked = enigma.crack(read_message, @date)
     puts "Created '#{@output_path}' with the cracked key #{cracked[:key]} and date #{cracked[:date]}"
-    alt_keys = find_alternate_keys(enigma, key)
+    alt_keys = find_alternate_keys(enigma, cracked[:key])
     puts "Alternate keys: #{alt_keys}" if !alt_keys.empty?
     write_message(cracked[:decryption])
   end
