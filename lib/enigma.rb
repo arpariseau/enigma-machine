@@ -1,4 +1,5 @@
 require_relative 'cipher'
+require_relative 'bombe'
 require 'date'
 
 class Enigma < Cipher

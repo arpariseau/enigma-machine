@@ -31,10 +31,11 @@ class Bombe
   def subtract_offsets(shifts, date)
     date_squared = (date.to_i ** 2).to_s[-4..-1]
     index = -1
-    shifts.map do |shift|
+    shifts.map! do |shift|
       index += 1
       shift -= date_squared.chars[index].to_i
     end
+    adjust_shifts(shifts)
   end
 
   def break_code(code_shifts)
