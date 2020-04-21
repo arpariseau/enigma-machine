@@ -87,10 +87,6 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.prep_ciphers("Hello, world", "02715", "040895")
   end
 
-  def test_find_shift_positions
-    assert_equal [14, 5, 5, 8], @enigma.find_shift_positions("hello world end", [8, 14, 5, 5])
-  end
-
   def test_subtract_offsets
     assert_equal [8, 2, 3, 4], @enigma.subtract_offsets([14, 5, 5, 8], "291018")
   end

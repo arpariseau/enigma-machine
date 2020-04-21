@@ -25,7 +25,7 @@ class Enigma < Cipher
     bombe = Bombe.new
     crib_word = message[-4..-1]
     base_shifts = bombe.find_shifts(crib_word)
-    shifts = find_shift_positions(message, base_shifts)
+    shifts = bombe.find_shift_positions(message, base_shifts)
     code_shifts = subtract_offsets(shifts, date)
     keycode = break_code(code_shifts)
     decrypt(message, keycode, date)
@@ -77,12 +77,6 @@ class Enigma < Cipher
     return "00" + random_key.to_s if random_key < 1000
     return "0" + random_key.to_s if random_key < 10000
     random_key.to_s
-  end
-
-  def find_shift_positions(message, shifts)
-    shift_pos = message.length % 4
-    pos_swap = shifts.shift(4 - shift_pos)
-    shifts += pos_swap
   end
 
   def subtract_offsets(shifts, date)

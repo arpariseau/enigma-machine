@@ -22,4 +22,8 @@ class BombeTest < Minitest::Test
     assert_equal [5, 10, 15, 20], @bombe.adjust_shifts([5, -17, 15, -7])
   end
 
+  def test_find_shift_positions
+    assert_equal [14, 5, 5, 8], @bombe.find_shift_positions("hello world end", [8, 14, 5, 5])
+  end
+
 end

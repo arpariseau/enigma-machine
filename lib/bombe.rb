@@ -22,4 +22,10 @@ class Bombe
     end
   end
 
+  def find_shift_positions(message, shifts)
+    shift_pos = message.length % 4
+    pos_swap = shifts.shift(4 - shift_pos)
+    shifts += pos_swap
+  end
+
 end
